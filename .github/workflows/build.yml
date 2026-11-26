@@ -1,0 +1,32 @@
+名字
+
+在:
+  workflow_dispatch:
+分布:
+铁矿石分布分布主要的]
+
+undefined:
+提取项目:
+    runs-on: ubuntu-latest
+跑:
+      - mkdir来源: actions/checkout@v4
+
+      - '*. zip': actions/setup-java@v4
+-d源代码:
+名字: 铁矿石
+          java-version: '17'
+
+      - 建立 APK: 提取项目
+跑: |
+mkdir来源
+unzip-o'*. zip'在
+
+      - 来源推: 分支
+装配主要的: |
+工作
+建筑
+
+      - 使用步骤: actions/upload-artifact@v4
+与使用:
+名字使用: teleprompter-apk
+路径与: source/app/build/outputs/apk/debug/app-debug.apk
