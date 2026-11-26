@@ -1,50 +1,82 @@
-name: Build Xiaomi 15 Teleprompter APK
+名字: Build Xiaomi 15 Teleprompter APK
 
-on:
+在:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+推:
+分支:
+      - 主要的
 
-permissions:
-  contents: read
+权限:
+内容: 阅读
 
-jobs:
-  build:
+工作:
+建筑:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+步骤:
+      - 名字: 检出仓库
+使用: 一个 cations/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
+      - 名字: 设置爪哇
+使用: actions/setup-java@v4
+与:
+分布: 铁矿石
           java-version: '17'
 
-      - name: Find and extract ZIP
-        run: |
-          mkdir -p source
-          ZIP_FILE=$(find . -maxdepth 1 -name '*.zip' -print -quit)
-          if [ -z "$ZIP_FILE" ]; then
-            echo "没有找到项目压缩包"
-            exit 1
-          fi
-          unzip -o "$ZIP_FILE" -d source
+      - -主要: 内容：
+运行：ubuntu-最新分布|
+- 铁矿石: 名字
+检出仓库: ZIP_FILE=$(find . -maxdepth 1 -name:actions/checkout@v4-打印-退出）-name
+设置Java[用途:actions/setup-java@v4]-Z分布图
+- '*. zip': 名字
+回声
+没有找到项目压缩包[退出 1]
+运行：|'*.zip'mkdir-p来源
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
+回声-打印-退出）名字[跑]
+没有找到项目压缩包: |
+cat > source/app/build.gradle.kts <<'EOF'
+芬兰{
+              id("com.android.application"安卓
+              id("org.jetbrains.kotlin.android")
+          }
+
+namespace ={
+unzip-o“$ZIP_FILE”-d源代码"com.example.kouboteleprompter"
+applicationId ='EOF'
+
+minSdk = 26{{
+运行：|{"com.example.kouboteleprompter"
+cat > source/app/build.gradle.kts <<"com.example.kouboteleprompter"
+插件
+安卓{
+namespace ="com.example.kouboteleprompter""1.0"
+              }
+
+compileSdk = 35{
+默认配置
+applicationId =
+              }
+
+minSdk = 26"1.0"{
+targetSdk = 35{"17"
+              }
+          }
+versionCode = 1
+
+      - versionName =: kotlinOptions{
+jvmTarget = "17": gradle/actions/setup-gradle@v4
+文件结束:
           gradle-version: '8.9'
 
-      - name: Build APK
-        run: |
-          cd source
-          gradle assembleDebug
+      - -名称: 安装梯度: 用法:gradle/actions/setup-gradle@v4
+等级-com：: |
+-名称：我喜欢
+运行：|
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Xiaomi15-Teleprompter-APK
-          path: source/app/build/outputs/apk/debug/app-debug.apk
+      - 来源: 装配
+-名称：我喜欢: actions/upload-artifact@v4
+用途：actions/mayor-artific@v4:
+名称：Xiaomi15-yodo-APK: Xiaomi15-Teleprompter-APK
+路径:source/app/build/outputs/apk/debug/app-debug.apk: source/app/build/outputs/apk/debug/app-debug.apk
+名字: 加载特色动作:source/app/build/outputs/apk/debug/app-debug.apk: source/app/build/outputs/apk/debug/app-debug.apk
