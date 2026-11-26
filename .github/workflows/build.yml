@@ -1,32 +1,50 @@
-名字
+name: Build Xiaomi 15 Teleprompter APK
 
-在:
+on:
   workflow_dispatch:
-分布:
-铁矿石分布分布主要的]
+  push:
+    branches:
+      - main
 
-undefined:
-提取项目:
+permissions:
+  contents: read
+
+jobs:
+  build:
     runs-on: ubuntu-latest
-跑:
-      - mkdir来源: actions/checkout@v4
 
-      - '*. zip': actions/setup-java@v4
--d源代码:
-名字: 铁矿石
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
           java-version: '17'
 
-      - 建立 APK: 提取项目
-跑: |
-mkdir来源
-unzip-o'*. zip'在
+      - name: Find and extract ZIP
+        run: |
+          mkdir -p source
+          ZIP_FILE=$(find . -maxdepth 1 -name '*.zip' -print -quit)
+          if [ -z "$ZIP_FILE" ]; then
+            echo "没有找到项目压缩包"
+            exit 1
+          fi
+          unzip -o "$ZIP_FILE" -d source
 
-      - 来源推: 分支
-装配主要的: |
-工作
-建筑
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
 
-      - 使用步骤: actions/upload-artifact@v4
-与使用:
-名字使用: teleprompter-apk
-路径与: source/app/build/outputs/apk/debug/app-debug.apk
+      - name: Build APK
+        run: |
+          cd source
+          gradle assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Xiaomi15-Teleprompter-APK
+          path: source/app/build/outputs/apk/debug/app-debug.apk
